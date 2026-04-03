@@ -57,7 +57,7 @@ LBF/
 No installation required.
 
 ```bash
-git clone https://github.com/your-username/LBF.git
+git clone https://github.com/harsha200628/POMODORO.git
 ```
 
 Open `index.html` in any modern browser. That's it.
