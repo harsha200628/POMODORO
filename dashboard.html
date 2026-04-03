@@ -142,6 +142,31 @@
     </main>
   </div>
 
+  <div class="mobile-nav">
+    <a href="dashboard.html" class="active"><span>📊</span>Dashboard</a>
+    <a href="game.html"><span>🎮</span>Game</a>
+  </div>
+
+  <style>
+    .mobile-nav { display: none; }
+    @media (max-width: 640px) {
+      .mobile-nav {
+        display: flex; position: fixed; bottom: 0.75rem; left: 0.75rem; right: 0.75rem;
+        height: 64px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-full);
+        z-index: 2000; justify-content: space-around; align-items: center;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      }
+      .mobile-nav a {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        color: var(--text-muted); text-decoration: none; font-size: 0.7rem; font-weight: 600;
+        transition: all 0.2s ease;
+      }
+      .mobile-nav a span { font-size: 1.4rem; }
+      .mobile-nav a.active { color: var(--primary); }
+    }
+  </style>
+
   <script src="js/store.js"></script>
   <script src="js/tasks.js"></script>
   <script src="js/pomodoro.js"></script>

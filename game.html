@@ -47,6 +47,11 @@
     </div>
   </div>
 
+  <div class="mobile-nav">
+    <a href="dashboard.html"><span>📊</span>Dashboard</a>
+    <a href="game.html" class="active"><span>🎮</span>Game</a>
+  </div>
+
   <style>
     @keyframes slideInRight {
       from { transform: translateX(100%); }
@@ -62,7 +67,22 @@
       #start-screen button { padding: 1rem 2.5rem !important; font-size: 1.1rem !important; }
       #shop-overlay { padding: 1.5rem !important; }
       #shop-overlay h4 { font-size: 1.25rem !important; }
+      
+      .mobile-nav {
+        display: flex; position: fixed; bottom: 0.75rem; left: 0.75rem; right: 0.75rem;
+        height: 64px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-full);
+        z-index: 2000; justify-content: space-around; align-items: center;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      }
+      .mobile-nav a {
+        display: flex; flex-direction: column; align-items: center; gap: 4px;
+        color: var(--text-muted); text-decoration: none; font-size: 0.7rem; font-weight: 600;
+      }
+      .mobile-nav a span { font-size: 1.4rem; }
+      .mobile-nav a.active { color: var(--primary); }
     }
+    .mobile-nav { display: none; }
   </style>
 
   <script src="js/store.js"></script>

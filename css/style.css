@@ -221,52 +221,116 @@ select option { background: var(--bg-main); color: var(--text-main); padding: 8p
   .app-layout { padding: 1rem; }
   .dashboard-grid { 
     grid-template-columns: 1fr !important; 
-    gap: 1.25rem !important;
-    height: auto !important; 
+    gap: 1.25rem; 
+    padding-bottom: 5rem;
   }
   
-  #timer-display { font-size: 5.5rem !important; }
-  aside { order: 2; width: 100% !important; max-height: none !important; }
-  .main-content > div { order: 1; margin: 0 !important; }
-  
-  .glass { margin-bottom: 0px; padding: 1.25rem !important; }
-  .glass-panel { padding: 2.5rem 1.5rem !important; min-height: auto !important; }
-  
-  body, html { overflow-x: hidden; }
+  aside { width: 100% !important; max-height: none !important; }
+  .glass { padding: 1.25rem !important; }
 }
 
 @media (max-width: 640px) {
-  header { 
-    flex-direction: column !important; 
-    gap: 1rem; 
-    padding: 1.25rem !important;
-    text-align: center;
+  :root {
+    --radius-lg: 24px;
+    --radius-md: 16px;
   }
-  header > div { 
-    flex-direction: column !important;
-    gap: 0.75rem !important;
-    width: 100%; 
-    justify-content: center !important;
-  }
-  header .flex-center { 
-    background: rgba(255,255,255,0.03);
-    padding: 0.6rem;
-    border-radius: var(--radius-md);
-    width: 100%;
-  }
-  
-  #timer-display { font-size: 4.2rem !important; }
-  .timer-modes { flex-wrap: wrap; justify-content: center; gap: 0.5rem !important; }
-  .timer-modes .btn { font-size: 0.8rem !important; padding: 0.5rem 0.8rem !important; }
-  
-  #btn-start, #btn-reset { width: 100% !important; margin-bottom: 0.5rem; }
-  #timer-view div:last-of-type { flex-direction: column; width: 100%; gap: 0.5rem; }
-}
 
-/* Base refinement for form on mobile */
-#task-form { padding: 1rem !important; }
-#task-form > div { flex-direction: column; }
-#task-form button { width: 100%; padding: 0.8rem !important; }
+  body {
+    background-attachment: scroll; /* Smoother scrolling on mobile */
+  }
+
+  .app-layout { 
+    padding: 0.75rem; 
+    padding-top: 5.5rem; /* Space for fixed HUD */
+  }
+
+  /* --- MOBILE HUD HEADER --- */
+  header.glass {
+    position: fixed;
+    top: 0.75rem; left: 0.75rem; right: 0.75rem;
+    z-index: 1000;
+    margin-bottom: 0 !important;
+    padding: 0.75rem 1rem !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    border-radius: var(--radius-full) !important;
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+  }
+
+  header h1 { font-size: 1.2rem !important; }
+  header nav { display: none !important; } /* Hide sub-nav on mobile HUD */
+  
+  header .flex-center { 
+    width: auto !important;
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 0.85rem !important;
+  }
+
+  header .flex-center span:not(#nav-level):not(#nav-xp):not(#nav-streak) {
+    display: none; /* Hide pipes on mobile */
+  }
+
+  header .flex-center span { margin: 0 4px !important; }
+
+  /* --- DASHBOARD GRID --- */
+  .dashboard-grid { gap: 1rem !important; }
+
+  /* --- TIMER AREA --- */
+  .glass-panel {
+    padding: 2.5rem 1rem !important;
+    border-radius: var(--radius-lg);
+  }
+
+  #timer-display { 
+    font-size: clamp(4.5rem, 15vw, 6rem) !important; 
+    margin: 1rem 0 !important;
+  }
+
+  .timer-modes { 
+    width: 100%;
+    background: rgba(0,0,0,0.2);
+    padding: 0.4rem;
+    border-radius: var(--radius-full);
+    gap: 0.25rem !important;
+  }
+  .timer-modes .btn { 
+    flex: 1; 
+    font-size: 0.75rem !important; 
+    padding: 0.6rem 0.4rem !important; 
+    border-radius: var(--radius-full) !important;
+  }
+
+  #active-task-display { font-size: 0.9rem !important; text-align: center; }
+
+  /* --- CONTROLS --- */
+  #timer-view > div:last-of-type { 
+    flex-direction: row !important; 
+    width: 100%; 
+    gap: 0.75rem !important; 
+  }
+  #btn-start { flex: 2; padding: 1.1rem !important; font-size: 1.1rem !important; }
+  #btn-reset { flex: 1; padding: 1.1rem !important; font-size: 1rem !important; }
+
+  /* --- TASK CARDS --- */
+  #active-tasks-list .glass {
+    padding: 1rem !important;
+  }
+  #active-tasks-list .btn {
+    padding: 0.8rem 0 !important;
+  }
+
+  /* --- STATS & BADGES --- */
+  aside .glass { padding: 1.25rem !important; }
+  #badges-container { grid-template-columns: repeat(5, 1fr) !important; gap: 0.5rem !important; }
+  #badges-container div div { width: 42px !important; height: 42px !important; font-size: 1.2rem !important; }
+
+  /* --- ADD TASK FORM --- */
+  #task-form { gap: 0.5rem !important; }
+  #task-form input, #task-form select { font-size: 0.9rem !important; padding: 0.7rem !important; }
+}
 
 #game-canvas {
   touch-action: none;
