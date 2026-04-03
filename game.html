@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Defense Core</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: var(--bg-main);">
+  
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100vh; padding: 1.5rem; box-sizing: border-box;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; z-index: 100;">
+      <a href="dashboard.html" class="btn btn-glass" style="padding: 0.6rem 2rem; font-size: 1rem; border-radius: var(--radius-full); font-weight: 600; text-decoration: none;">
+        Home
+      </a>
+      <button id="btn-shop-toggle" class="btn btn-primary" style="padding: 0.6rem 2rem; font-size: 1rem; border-radius: var(--radius-full); font-weight: 600; border: none; cursor: pointer;">
+        Open Store
+      </button>
+    </div>
+
+    <!-- Canvas Wrapper -->
+    <div style="flex: 1; position: relative; background: #020617; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);" id="canvas-container">
+      
+      <!-- Start Screen Overlay -->
+      <div id="start-screen" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(6, 11, 25, 0.6); backdrop-filter: blur(8px);">
+        <h1 class="text-gradient" style="font-size: 5rem; margin-bottom: 0.5rem; letter-spacing: -2px; text-shadow: 0 10px 30px rgba(129, 140, 248, 0.4);">DEFENSE CORE</h1>
+        <p class="text-muted" style="font-size: 1.15rem; margin-bottom: 3rem; max-width: 600px; text-align: center; line-height: 1.6;">Protect the neural matrix from incoming digital distractions using XP natively acquired from your sustained Pomodoro focus sessions.</p>
+        <button id="btn-launch-game" class="btn btn-primary" style="padding: 1.2rem 4rem; font-size: 1.4rem; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 1px;">
+          Engage Matrix
+        </button>
+      </div>
+
+      <canvas id="game-canvas" tabindex="0" style="display: block; outline: none; cursor: crosshair; width: 100%; height: 100%;"></canvas>
+        
+      <!-- Shop Overlay -->
+      <div id="shop-overlay" style="display: none; position: absolute; top: 0; right: 0; bottom: 0; width: min(450px, 100vw); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(25px); border-left: 1px solid var(--glass-border); padding: 2.5rem; flex-direction: column; z-index: 90; animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; margin-top: 1rem;">
+          <h4 style="color: var(--text-main); font-size: 1.5rem; margin: 0;">Arsenal Upgrades</h4>
+          <span class="text-muted" style="font-size: 1.1rem;">XP: <strong id="shop-xp" style="color: var(--accent);">0</strong></span>
+        </div>
+        
+        <div id="shop-items-container" style="display: flex; flex-direction: column; gap: 1.25rem; overflow-y: auto; padding-right: 0.5rem;">
+          <!-- Items injected via JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; transform: scale(1); filter: blur(0); }
+      to { opacity: 0; transform: scale(1.05); filter: blur(10px); }
+    }
+  </style>
+
+  <script src="js/store.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if(typeof Store !== 'undefined') Store.init();
+      if(typeof Game !== 'undefined') Game.init();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Gamified Focus Engine</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <header class="glass" style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-radius: var(--radius-lg);">
+      <div style="display: flex; align-items: center; gap: 2rem;">
+        <h1 class="text-gradient" style="margin: 0; font-size: 1.6rem;">Focus Engine</h1>
+        <nav style="display: flex; gap: 0.75rem;">
+          <a href="index.html" class="btn btn-glass" style="padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: var(--radius-full); text-decoration: none;">Home</a>
+          <a href="game.html" class="btn btn-glass" style="padding: 0.5rem 1rem; font-size: 0.9rem; border-radius: var(--radius-full); text-decoration: none;">Open Game</a>
+        </nav>
+      </div>
+      <div class="flex-center">
+        <span class="text-muted" style="font-weight: 500;">Level <span id="nav-level">1</span></span>
+        <span style="margin: 0 12px; color: rgba(255,255,255,0.15);">|</span>
+        <span style="color: var(--accent); font-weight: bold;"><span id="nav-xp">0</span> XP</span>
+        <span style="margin: 0 12px; color: rgba(255,255,255,0.15);">|</span>
+        <span style="color: #fbbf24; font-weight: bold;">🔥 <span id="nav-streak">0</span> Streak</span>
+      </div>
+    </header>
+
+    <main class="main-content dashboard-grid" style="display: grid; grid-template-columns: minmax(320px, 380px) 1fr minmax(300px, 340px); gap: 2rem; width: 100%; align-items: start;">
+      
+      <!-- Left Column: Tasks -->
+      <aside class="glass" style="padding: 1.5rem; display: flex; flex-direction: column; max-height: calc(100vh - 140px);">
+        <h2 style="margin-bottom: 1.5rem; font-size: 1.3rem; display: flex; align-items: center; gap: 0.6rem;">
+          <span style="color: var(--primary); font-size: 1.5rem;">✦</span> Action Targets
+        </h2>
+        <div style="flex: 1; overflow-y: auto; padding-right: 0.5rem; display: flex; flex-direction: column;" id="tasks-container">
+          <!-- Form -->
+          <form id="task-form" style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; background: rgba(255,255,255,0.03); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--glass-border);">
+            <input type="text" id="task-title" placeholder="Add new task" class="input-glass" style="width: 100%; box-sizing: border-box; border-radius: var(--radius-sm);" required>
+            <div style="display: flex; gap: 0.5rem;">
+              <select id="task-priority" class="input-glass" style="flex: 1; border-radius: var(--radius-sm); padding: 0.5rem; cursor: pointer;">
+                <option value="HIGH">High Priority</option>
+                <option value="NORMAL" selected>Normal Priority</option>
+                <option value="LOW">Low Priority</option>
+              </select>
+              <div style="display: flex; align-items: center; background: rgba(0,0,0,0.3); padding: 0 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--glass-border);">
+                <span style="font-size: 1rem; margin-right: 4px;">🍅</span>
+                <input type="number" id="task-sessions" value="1" min="1" max="50" style="width: 35px; background: transparent; border: none; color: var(--text-main); outline: none; text-align: center; font-size: 0.95rem;" title="Target Focus Sessions">
+              </div>
+              <button type="submit" class="btn btn-primary" style="padding: 0 1rem; border-radius: var(--radius-sm);">Add</button>
+            </div>
+          </form>
+
+          <!-- Lists -->
+          <div id="active-tasks-list"></div>
+          <div id="completed-tasks-list" style="margin-top: 2rem;"></div>
+        </div>
+      </aside>
+
+      <!-- Center Column: Pomodoro -->
+      <div style="display: flex; flex-direction: column; align-items: center; padding-top: 2rem;">
+        <div style="width: 100%; max-width: 600px;">
+           <main class="glass-panel flex-center" style="flex-direction: column; padding: 4rem 2.5rem; min-height: 450px; position: relative; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);">
+             
+             <button id="btn-settings-toggle" class="btn-glass" style="position: absolute; top: 1.5rem; right: 1.5rem; padding: 0.4rem 1rem; border-radius: var(--radius-full); font-size: 0.85rem;">Settings</button>
+             
+             <div id="settings-view" style="display: none; flex-direction: column; gap: 1.2rem; width: 260px;">
+               <h3 style="text-align: center; margin-bottom: 0.5rem;">Timer Settings</h3>
+               <div>
+                  <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Focus Time (Mins)</label>
+                  <input type="number" id="cfg-focus" value="25" min="1" class="input-glass" style="width: 100%; box-sizing: border-box;">
+               </div>
+               <div>
+                  <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Short Break (Mins)</label>
+                  <input type="number" id="cfg-short" value="5" min="1" class="input-glass" style="width: 100%; box-sizing: border-box;">
+               </div>
+               <div>
+                  <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Long Break (Mins)</label>
+                  <input type="number" id="cfg-long" value="15" min="1" class="input-glass" style="width: 100%; box-sizing: border-box;">
+               </div>
+               <button id="btn-settings-save" class="btn btn-primary" style="margin-top: 0.5rem;">Save Changes</button>
+             </div>
+
+             <div id="timer-view" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+               <div class="timer-modes" style="display: flex; gap: 0.75rem; margin-bottom: 2.5rem;">
+                 <button id="mode-focus" class="btn btn-primary" style="font-size: 0.9rem;">Focus</button>
+                 <button id="mode-short" class="btn btn-glass" style="font-size: 0.9rem;">Short Break</button>
+                 <button id="mode-long" class="btn btn-glass" style="font-size: 0.9rem;">Long Break</button>
+               </div>
+
+               <div style="position: relative; display: flex; justify-content: center; align-items: center;">
+                 <h1 id="timer-display" style="font-size: 7rem; font-weight: 700; letter-spacing: -2px; font-variant-numeric: tabular-nums; margin: 0;">25:00</h1>
+               </div>
+               
+               <div style="min-height: 3rem; display: flex; align-items: center; justify-content: center; margin-top: 0.5rem; margin-bottom: 1.5rem;" id="active-task-display">
+                 <div style="color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">Select a task to unlock focus</div>
+               </div>
+
+               <div style="display: flex; gap: 1rem;">
+                 <button id="btn-start" class="btn btn-primary" style="width: 160px; font-size: 1.2rem; padding: 1rem; opacity: 0.4; cursor: not-allowed;" disabled>Start</button>
+                 <button id="btn-reset" class="btn btn-glass" style="width: 120px; font-size: 1.1rem; padding: 1rem;">Reset</button>
+               </div>
+               
+               <p class="text-muted" style="margin-top: 2.5rem; font-size: 0.9rem;">
+                 Cycles Completed: <strong id="timer-cycles" style="color: var(--text-main);">0</strong>
+               </p>
+             </div>
+
+           </main>
+        </div>
+      </div>
+
+      <!-- Right Column: Stats -->
+      <aside style="display: flex; flex-direction: column; gap: 2rem;">
+        <div class="glass" style="padding: 1.5rem;">
+          <h2 style="font-size: 1.3rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;">
+            <span style="color: var(--accent); font-size: 1.5rem;">⟡</span> Data Core
+          </h2>
+          <div style="background: rgba(0,0,0,0.15); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.05);">
+            <p class="text-muted" style="display: flex; justify-content: space-between; margin-bottom: 0.85rem; font-size: 0.95rem;">
+              <span>Focus Sessions</span> 
+              <strong id="data-sessions" style="color: var(--text-main); font-size: 1.1rem;">0</strong>
+            </p>
+            <p class="text-muted" style="display: flex; justify-content: space-between; font-size: 0.95rem; margin: 0;">
+              <span>Total XP Harvested</span> 
+              <strong id="data-xp" style="color: var(--primary); font-size: 1.1rem;">0</strong>
+            </p>
+          </div>
+        </div>
+        
+        <div class="glass" style="padding: 1.5rem;">
+          <div>
+            <h2 style="font-size: 1.3rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;">
+              <span style="color: #fbbf24; font-size: 1.5rem;">★</span> Achievements
+            </h2>
+            <div id="badges-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 1rem;">
+               <!-- Badges injected by JS -->
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </main>
+  </div>
+
+  <script src="js/store.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/pomodoro.js"></script>
+  <script src="js/badges.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+       if(typeof Store !== 'undefined') Store.init();
+       if(typeof Tasks !== 'undefined') Tasks.init();
+       if(typeof Pomodoro !== 'undefined') Pomodoro.init();
+       if(typeof Badges !== 'undefined') Badges.init();
+    });
+  </script>
+</body>
+</html>
