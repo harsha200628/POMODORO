@@ -54,24 +54,25 @@
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
     .headline {
-      font-size: clamp(3.2rem, 9vw, 7rem);
-      font-weight: 800; line-height: 1.05; letter-spacing: -0.03em;
+      font-size: clamp(2.5rem, 10vw, 7rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.03em;
       animation: fadeUp 0.7s 0.1s ease both;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
     .line-1 { display: block; color: #f8fafc; }
     .line-2 { display: block; background: linear-gradient(135deg, #c084fc 0%, #818cf8 45%, #38bdf8 100%); background-clip: text; -webkit-background-clip: text; color: transparent; }
 
     .sub {
-      max-width: 560px; font-size: clamp(1rem, 2.5vw, 1.18rem);
-      color: #94a3b8; line-height: 1.75;
+      max-width: 540px; font-size: clamp(0.95rem, 3vw, 1.15rem);
+      color: #94a3b8; line-height: 1.7;
       animation: fadeUp 0.7s 0.2s ease both;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
+      padding: 0 1rem;
     }
 
     .btn-launch {
-      padding: 1.1rem 3.25rem;
-      font-size: 1.15rem; font-weight: 700;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem; font-weight: 700;
       border: none; border-radius: 9999px; cursor: pointer;
       background: linear-gradient(135deg, #c084fc, #818cf8, #60a5fa);
       background-size: 200% 200%;
@@ -80,6 +81,7 @@
       transition: all 0.3s ease;
       font-family: inherit; letter-spacing: 0.02em;
       animation: fadeUp 0.7s 0.3s ease both, gradientShift 4s ease infinite;
+      width: min(100%, 300px);
     }
     .btn-launch:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(129,140,248,0.65), 0 1px 0 rgba(255,255,255,0.25) inset; }
     .btn-launch:active { transform: scale(0.97); }
