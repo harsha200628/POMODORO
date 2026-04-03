@@ -330,6 +330,9 @@ select option { background: var(--bg-main); color: var(--text-main); padding: 8p
   /* --- ADD TASK FORM --- */
   #task-form { gap: 0.5rem !important; }
   #task-form input, #task-form select { font-size: 0.9rem !important; padding: 0.7rem !important; }
+
+  /* Ensure the last content item isn't buried behind the mobile nav */
+  .app-layout { padding-bottom: 25vh !important; }
 }
 
 #game-canvas {
